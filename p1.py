@@ -83,3 +83,5 @@ print(assets10Q)
 
 
 #get html file of website and use regular expressions
+
+# First commit done, time to do ticker symbol work
