@@ -43,12 +43,17 @@ print(companyConcept.json().keys())
 
 list1 = companyConcept.json()['units']['USD']
 print(f"{companyConcept.json()['entityName']} (Total Assets):")
+
+# Previous year's value stored. Initially this is set to zero, because first element does not have a previous
+prev_year = 0
+
 for key in list1:
     if '10-K/A' not in key['form']:
         if 'frame' not in key:
             if '10-K' in key['form']:
-                #print(key)
-                print(key['fy'], key['val'])
+                if key['val'] != prev_year:  # This if statement checks if the previous year's value is NOT equal to current year's value
+                    print(key['fy'], key['val'])
+                    prev_year = key['val']  # set the current value to previous, to prepare for next key in for loop
 
 '''
 ## Version 1
@@ -83,6 +88,3 @@ print(assets10Q)
 
 
 #get html file of website and use regular expressions
-
-# First commit done, time to do ticker symbol work
-# This is a branch for me
