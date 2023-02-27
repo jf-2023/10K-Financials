@@ -16,21 +16,25 @@ companyTickers = requests.get("https://www.sec.gov/files/company_tickers.json",
 #companyData1 = pd.DataFrame(companyTickers.json())
 # Format dict into nice dataframe
 companyData = pd.DataFrame.from_dict(companyTickers.json(), orient='index')
+'''This sets the index to the ticker, so that we can call the stock by its ticker, not the index number'''
+companyData = companyData.set_index('ticker') 
+
 #print(companyData1)
-#print(companyData)
 # Add zeros in front of cik_str
 companyData['cik_str'] = companyData['cik_str'].astype(str).str.zfill(10)
-#print(companyData['cik_str'])
 
 #print(companyData[0:2])
 
 # cik = companyData[0:5].cik_str[0:5]
 
+'''Prompt the user for which Stock ticker they want'''
+ticker = input("Stock ticker: ")
+
 #print(companyData[0:1])
-MSFT = companyData.cik_str[1]
-#print(AAPL)
+company = companyData.cik_str[ticker]  #changed the variable name from MSFT to company
+
 companyConcept = requests.get(
-    (f'https://data.sec.gov/api/xbrl/companyconcept/CIK{MSFT}'
+    (f'https://data.sec.gov/api/xbrl/companyconcept/CIK{company}'
      f'/us-gaap/Assets.json'), headers=header)
 
 
